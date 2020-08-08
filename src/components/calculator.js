@@ -24,19 +24,21 @@ const Calculator = () => {
       } else {
         setNumbers({ first: num, second: null });
       }
+      console.log(value);
+      console.log(numbers);
     } else if (digit === "•" && regNum.test(value)) {
       setValue(value + ".");
       setFloat(true);
     } else if (digit === "=") {
       calcOperation();
       setFloat(false);
+      setOperand("");
     } else if (
       digit === "-" ||
       digit === "+" ||
       digit === "x" ||
       digit === "/"
     ) {
-      console.log(numbers);
       setOperand(digit);
       setValue(0);
     } else if (digit === "%") {
