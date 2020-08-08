@@ -4,6 +4,7 @@ import Calculator from "./components/calculator";
 function App() {
   return (
     <div className="App">
+      <h1>MightyCal</h1>
       <Calculator />
     </div>
   );
