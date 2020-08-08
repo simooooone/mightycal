@@ -28,10 +28,6 @@ const Calculator = () => {
       setValue(value + ".");
       setFloat(true);
     } else if (digit === "=") {
-      //console.log(value);
-      //setNumbers({ ...numbers, second: value });
-      /* setNumbers({ first: 0, second: value });*/
-      console.log(numbers);
       calcOperation();
       setFloat(false);
     } else if (
@@ -40,8 +36,8 @@ const Calculator = () => {
       digit === "x" ||
       digit === "/"
     ) {
+      console.log(numbers);
       setOperand(digit);
-      //setNumbers({ first: value, second: null });
       setValue(0);
     } else if (digit === "%") {
       setValue(value / 100);
@@ -56,25 +52,24 @@ const Calculator = () => {
       } else {
         setNumbers({ first: -value, second: null });
       }
-      console.log(numbers);
+
       setValue(-value);
     }
   };
 
   const calcOperation = () => {
-    /* console.log("first", numbers[0].first);
-    console.log("second", numbers[0].second);
-    */
+    let ret;
     if (operand === "+") {
-      setValue(numbers.first + numbers.second);
+      ret = numbers.first + numbers.second;
     } else if (operand === "-") {
-      setValue(numbers.first - numbers.second);
+      ret = numbers.first - numbers.second;
     } else if (operand === "x") {
-      setValue(numbers.first * numbers.second);
+      ret = numbers.first * numbers.second;
     } else if (operand === "/") {
-      setValue(numbers.first / numbers.second);
+      ret = numbers.first / numbers.second;
     }
-    setNumbers([{ first: null, second: null }]);
+    setValue(ret);
+    setNumbers({ first: ret, second: null });
   };
 
   return (

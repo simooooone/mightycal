@@ -89,7 +89,8 @@ body {
     &.border-left {
       border-left: 1px solid #aaa;
     }
-    &:hover {
+    &:hover,
+    &:focus {
       color: #fff;
     }
     /*&::before {
