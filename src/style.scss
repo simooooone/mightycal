@@ -22,17 +22,19 @@ body {
     max-width: 400px;
     width: 100%;
     margin: 0 auto;
+    background-color: red;
 
     .contDisplay {
       display: flex;
 
       .display {
-        max-width: 400px;
+        max-width: 100%;
         width: 100%;
-        border: 1px solid #aaa;
+        border-radius: 25px;
+        margin: 3px;
+        border: 0 none;
         height: 50px;
         line-height: 50px;
-        margin: 0;
         padding: 0;
         padding-right: 45px;
         text-align: right;
@@ -41,7 +43,7 @@ body {
 
     .keyboard {
       display: flex;
-      max-width: 400px;
+      max-width: 100%;
       width: 100%;
 
       .inputKeys {
@@ -57,12 +59,12 @@ body {
         }
 
         button {
-          width: 33.33333333333333%;
+          width: calc(33.33333333333333% - 6px);
         }
 
         .foot {
           .key-0 {
-            width: 66.6666666666667%;
+            width: calc(66.6666666666667% - 6px);
             text-align: left;
             padding-left: 45px;
           }
@@ -79,12 +81,11 @@ body {
 
   button {
     border: 0 none;
-    border-radius: 0;
-    margin: 0;
+    border-radius: 25px;
+    margin: 3px;
     padding: 0;
     height: 50px;
-    border-right: 1px solid #aaa;
-    border-bottom: 1px solid #aaa;
+    border: 0 none;
     line-height: 50px;
     position: relative;
     -webkit-appearance: none;
@@ -92,6 +93,7 @@ body {
     &.border-left {
       border-left: 1px solid #aaa;
     }
+
     &:hover,
     &:focus {
       color: #fff;
