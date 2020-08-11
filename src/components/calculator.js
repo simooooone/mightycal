@@ -11,12 +11,29 @@ const Calculator = () => {
   const onClick = (e) => {
     const regNum = /^\d+$/;
     const digit = e.target.innerText;
-
     if (regNum.test(digit)) {
       let num;
-      value === 0 ? (num = digit) : (num = value + digit);
 
-      float ? (num = parseFloat(num, 10)) : (num = parseInt(num, 10));
+      if (numbers.first) {
+        if (
+          numbers.first.toString().length >= 8 ||
+          numbers.second.toString().length >= 8
+        ) {
+          console.log("second");
+          return;
+        }
+      } else {
+        if (numbers.first.toString().length >= 8) {
+          console.log("first");
+          return;
+        }
+      }
+
+      value === "0" ? (num = digit) : (num = value + digit);
+
+      float
+        ? (num = parseFloat(num).toFixed(value.length - 1))
+        : (num = parseInt(num, 10));
 
       setValue(num);
       if (operand !== "") {
@@ -24,8 +41,6 @@ const Calculator = () => {
       } else {
         setNumbers({ first: num, second: null });
       }
-      console.log(value);
-      console.log(numbers);
     } else if (digit === "•" && regNum.test(value)) {
       setValue(value + ".");
       setFloat(true);
@@ -61,14 +76,20 @@ const Calculator = () => {
 
   const calcOperation = () => {
     let ret;
+    let first = numbers.first;
+    let second = numbers.second;
+    if (float) {
+      first = parseFloat(first);
+      second = parseFloat(second);
+    }
     if (operand === "+") {
-      ret = numbers.first + numbers.second;
+      ret = first + second;
     } else if (operand === "-") {
-      ret = numbers.first - numbers.second;
+      ret = first - second;
     } else if (operand === "x") {
-      ret = numbers.first * numbers.second;
+      ret = first * second;
     } else if (operand === "/") {
-      ret = numbers.first / numbers.second;
+      ret = first / second;
     }
     setValue(ret);
     setNumbers({ first: ret, second: null });
