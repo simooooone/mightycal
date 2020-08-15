@@ -13,19 +13,26 @@ const Calculator = () => {
     const digit = e.target.innerText;
     if (regNum.test(digit)) {
       let num;
-
-      if (numbers.first) {
-        if (
-          numbers.first.toString().length >= 8 ||
-          numbers.second.toString().length >= 8
-        ) {
-          console.log("second");
-          return;
-        }
-      } else {
+      /* console.log("numbers.first", numbers.first); */
+      /* console.log("numbers.second", numbers.second); */
+      /* console.log("numbers.second != null", numbers.second != null); */
+      /* console.log(numbers.first != null && numbers.second != null); */
+      if (
+        (typeof numbers.first !== "undefined" && numbers.first != null) ||
+        (typeof numbers.second !== "undefined" && numbers.second != null)
+      ) {
         if (numbers.first.toString().length >= 8) {
-          console.log("first");
           return;
+        } else if (
+          typeof numbers.second !== "undefined" &&
+          numbers.second != null
+        ) {
+          if (
+            numbers.first.toString().length >= 8 ||
+            numbers.second.toString().length >= 8
+          ) {
+            return;
+          }
         }
       }
 
@@ -55,6 +62,7 @@ const Calculator = () => {
       digit === "/"
     ) {
       setOperand(digit);
+      setNumbers({ ...numbers, second: value });
       setValue(0);
     } else if (digit === "%") {
       setValue(value / 100);
