@@ -1,6 +1,6 @@
 {
   "short_name": "MightyCal",
-  "name": "My Mighty Calculator",
+  "name": "Mighty Calculator",
   "icons": [
     {
       "src": "favicon.ico",
@@ -19,7 +19,7 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "display": "minimal-ui",
+  "theme_color": "#3740ff",
+  "background_color": "#333333"
 }

@@ -1,106 +1,98 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ItemButton from "./button";
 import Display from "./display";
 
 const Calculator = () => {
-  const [value, setValue] = useState(0);
-  const [operand, setOperand] = useState("");
-  const [numbers, setNumbers] = useState({});
-  const [float, setFloat] = useState(false);
+  useEffect(() => {}, [value]);
 
+  const [value, setValue] = useState(0);
+  const [operand, setOperand] = useState([]);
+  const [numbers, setNumbers] = useState([]);
+  const [float, setFloat] = useState(false);
+  const [newNumber, setNewNumber] = useState(false);
+  let num;
   const onClick = (e) => {
     const regNum = /^\d+$/;
     const digit = e.target.innerText;
-    if (regNum.test(digit)) {
-      let num;
-      /* console.log("numbers.first", numbers.first); */
-      /* console.log("numbers.second", numbers.second); */
-      /* console.log("numbers.second != null", numbers.second != null); */
-      /* console.log(numbers.first != null && numbers.second != null); */
-      if (
-        (typeof numbers.first !== "undefined" && numbers.first != null) ||
-        (typeof numbers.second !== "undefined" && numbers.second != null)
-      ) {
-        if (numbers.first.toString().length >= 8) {
-          return;
-        } else if (
-          typeof numbers.second !== "undefined" &&
-          numbers.second != null
-        ) {
-          if (
-            numbers.first.toString().length >= 8 ||
-            numbers.second.toString().length >= 8
-          ) {
-            return;
-          }
-        }
+    if (regNum.test(digit) || digit === "±") {
+      if (digit === "±") {
+        setValue(-value);
+        return;
+      }
+
+      if (value.toString().length >= 8) {
+        return;
       }
 
       value === "0" ? (num = digit) : (num = value + digit);
 
-      float
-        ? (num = parseFloat(num).toFixed(value.length - 1))
-        : (num = parseInt(num, 10));
-
-      setValue(num);
-      if (operand !== "") {
-        setNumbers({ ...numbers, second: num });
+      if (float) {
+        num = parseFloat(num).toFixed(value.length - 1);
       } else {
-        setNumbers({ first: num, second: null });
+        num = parseInt(num, 10);
+      }
+
+      if (newNumber) {
+        setNumbers([...numbers, value]);
+        setValue(digit);
+        setNewNumber(false);
+      } else {
+        setValue(num);
+        console.log(numbers[numbers.length - 1]);
+        setNumbers(() => (numbers[numbers.length - 1] = num));
       }
     } else if (digit === "•" && regNum.test(value)) {
       setValue(value + ".");
       setFloat(true);
-    } else if (digit === "=") {
-      calcOperation();
+    } else if (digit === "%") {
+      setValue(value / 100);
+    } else if (digit === "C") {
+      setValue(0);
+      setOperand([]);
+      setNumbers([]);
       setFloat(false);
-      setOperand("");
     } else if (
       digit === "-" ||
       digit === "+" ||
       digit === "x" ||
       digit === "/"
     ) {
-      setOperand(digit);
-      setNumbers({ ...numbers, second: value });
-      setValue(0);
-    } else if (digit === "%") {
-      setValue(value / 100);
-    } else if (digit === "C") {
-      setValue(0);
-      setOperand("");
-      setNumbers({});
+      setOperand([...operand, digit]);
+      console.log(operand);
+      setNewNumber(true);
+    } else if (digit === "=") {
+      setNumbers([...numbers, value]);
+      calcOperation();
       setFloat(false);
-    } else if (digit === "±") {
-      if (operand !== "") {
-        setNumbers({ ...numbers, second: -value });
-      } else {
-        setNumbers({ first: -value, second: null });
-      }
-
-      setValue(-value);
+      setOperand([]);
+      setNumbers([]);
+      setNewNumber(false);
     }
   };
 
   const calcOperation = () => {
-    let ret;
-    let first = numbers.first;
-    let second = numbers.second;
-    if (float) {
-      first = parseFloat(first);
-      second = parseFloat(second);
-    }
-    if (operand === "+") {
-      ret = first + second;
-    } else if (operand === "-") {
-      ret = first - second;
-    } else if (operand === "x") {
-      ret = first * second;
-    } else if (operand === "/") {
-      ret = first / second;
+    let ret = 0;
+    console.log("numbers", numbers);
+
+    for (let i = 0; i < numbers.length; i++) {
+      let tempNum = parseFloat(numbers[i]);
+      let tempNum2 = numbers[i + 1] ? parseFloat(numbers[i + 1]) : num;
+      let op = operand[i];
+      if (!ret) {
+        ret = tempNum;
+      }
+
+      if (op === "+") {
+        ret = ret + tempNum2;
+      } else if (op === "-") {
+        ret = ret - tempNum2;
+      } else if (op === "x") {
+        ret = ret * tempNum2;
+      } else if (op === "/") {
+        ret = ret / tempNum2;
+      }
     }
     setValue(ret);
-    setNumbers({ first: ret, second: null });
   };
 
   return (
