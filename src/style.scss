@@ -22,7 +22,14 @@ body {
     max-width: 400px;
     width: 100%;
     margin: 0 auto;
-
+    .history {
+      width: calc(100% - 10px);
+      margin: 5px auto;
+      padding: 15px;
+      border-radius: 25px;
+      background-color: #fff;
+      text-align: right;
+    }
     .contDisplay {
       display: flex;
 

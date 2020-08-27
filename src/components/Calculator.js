@@ -1,54 +1,63 @@
-import React, { useState, useEffect } from "react";
-import ItemButton from "./button";
-import Display from "./display";
+import React, { useState /* useEffect */ } from "react";
+import ItemButton from "./Button";
+import Display from "./Display";
+/* import History from "./History"; */
 
 const Calculator = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState({
+    value: 0,
+    float: false,
+    newNumber: false,
+  });
   const [operand, setOperand] = useState([]);
   const [numbers, setNumbers] = useState([]);
-  const [float, setFloat] = useState(false);
-  const [newNumber, setNewNumber] = useState(false);
-  let num;
+  /*   const [operationResult, setOperationResult] = useState("");
+   */ let num;
   let arr = [];
+  let currentOpString = "";
+
+  /*useEffect(() => {
+    setOperationResult(
+      operationResult + "<br />" + currentOpString + "<br />" + value.value
+    );
+    console.log(value);
+  }, [value]); */
 
   const onClick = (e) => {
     const regNum = /^\d+$/;
     const digit = e.target.innerText;
     if (regNum.test(digit) || digit === "±") {
       if (digit === "±") {
-        setValue(-value);
+        setValue({ ...value, value: -value.value });
         return;
       }
 
-      if (value.toString().length >= 8) {
+      if (value.value.toString().length >= 8) {
         return;
       }
 
-      value === "0" ? (num = digit) : (num = value + digit);
+      value.value === "0" ? (num = digit) : (num = value.value + digit);
 
-      if (float) {
-        num = parseFloat(num).toFixed(value.length - 1);
+      if (value.float) {
+        num = parseFloat(num).toFixed(value.value.length - 1);
       } else {
         num = parseInt(num, 10);
       }
 
-      if (newNumber) {
-        setNumbers([...numbers, value]);
-        setValue(digit);
-        setNewNumber(false);
+      if (value.newNumber) {
+        setNumbers([...numbers, value.value]);
+        setValue({ ...value, value: digit, newNumber: false });
       } else {
-        setValue(num);
+        setValue({ ...value, value: num });
       }
     } else if (digit === "•" && regNum.test(value)) {
-      setValue(value + ".");
-      setFloat(true);
+      setValue({ ...value, float: true, value: value + "." });
     } else if (digit === "%") {
-      setValue(value / 100);
+      setValue({ ...value, value: value / 100 });
     } else if (digit === "C") {
-      setValue(0);
       setOperand([]);
       setNumbers([]);
-      setFloat(false);
+      setValue({ ...value, value: 0, float: false });
     } else if (
       digit === "-" ||
       digit === "+" ||
@@ -56,14 +65,13 @@ const Calculator = () => {
       digit === "/"
     ) {
       setOperand([...operand, digit]);
-      setNewNumber(true);
+      setValue({ ...value, newNumber: true });
     } else if (digit === "=") {
-      arr = [...numbers, value];
+      arr = [...numbers, value.value];
       calculateOperation();
-      setFloat(false);
       setOperand([]);
       setNumbers([]);
-      setNewNumber(false);
+      setValue({ ...value, newNumber: false, float: false });
     }
   };
 
@@ -75,30 +83,33 @@ const Calculator = () => {
       let tempNum2 = parseFloat(arr[i + 1]);
 
       let op = operand[i];
+
       if (!ret) {
         ret = tempNum;
+        currentOpString = tempNum + op + tempNum2;
+      } else {
+        currentOpString = currentOpString + op + tempNum2;
       }
 
       if (op === "+") {
         ret = ret + tempNum2;
-        console.log("+", ret);
       } else if (op === "-") {
         ret = ret - tempNum2;
-        console.log("-", ret);
       } else if (op === "x") {
         ret = ret * tempNum2;
-        console.log("*", ret);
       } else if (op === "/") {
         ret = ret / tempNum2;
-        console.log("/", ret);
       }
     }
-    setValue(ret);
+
+    setValue({ ...value, value: ret });
+    console.log("entrato", ret);
   };
 
   return (
     <div className="calculator">
-      <Display value={value} />
+      {/* <History ret={operationResult} /> */}
+      <Display value={value.value} />
 
       <div className="keyboard">
         <div className="inputKeys">
