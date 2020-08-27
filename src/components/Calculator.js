@@ -1,63 +1,54 @@
 import React, { useState /* useEffect */ } from "react";
 import ItemButton from "./Button";
 import Display from "./Display";
-/* import History from "./History"; */
 
 const Calculator = () => {
-  const [value, setValue] = useState({
+  const [states, setStates] = useState({
     value: 0,
     float: false,
     newNumber: false,
   });
   const [operand, setOperand] = useState([]);
   const [numbers, setNumbers] = useState([]);
-  /*   const [operationResult, setOperationResult] = useState("");
-   */ let num;
+  let num;
   let arr = [];
   let currentOpString = "";
-
-  /*useEffect(() => {
-    setOperationResult(
-      operationResult + "<br />" + currentOpString + "<br />" + value.value
-    );
-    console.log(value);
-  }, [value]); */
 
   const onClick = (e) => {
     const regNum = /^\d+$/;
     const digit = e.target.innerText;
     if (regNum.test(digit) || digit === "±") {
       if (digit === "±") {
-        setValue({ ...value, value: -value.value });
+        setStates({ ...states, value: -states.value });
         return;
       }
 
-      if (value.value.toString().length >= 8) {
+      if (states.value.toString().length >= 8) {
         return;
       }
 
-      value.value === "0" ? (num = digit) : (num = value.value + digit);
+      states.value === "0" ? (num = digit) : (num = states.value + digit);
 
-      if (value.float) {
-        num = parseFloat(num).toFixed(value.value.length - 1);
+      if (states.float) {
+        num = parseFloat(num).toFixed(states.value.length - 1);
       } else {
         num = parseInt(num, 10);
       }
 
-      if (value.newNumber) {
-        setNumbers([...numbers, value.value]);
-        setValue({ ...value, value: digit, newNumber: false });
+      if (states.newNumber) {
+        setNumbers([...numbers, states.value]);
+        setStates({ ...states, value: digit, newNumber: false });
       } else {
-        setValue({ ...value, value: num });
+        setStates({ ...states, value: num });
       }
-    } else if (digit === "•" && regNum.test(value)) {
-      setValue({ ...value, float: true, value: value + "." });
+    } else if (digit === "•" && regNum.test(states.value)) {
+      setStates({ ...states, float: true, value: states.value + "." });
     } else if (digit === "%") {
-      setValue({ ...value, value: value / 100 });
+      setStates({ ...states, value: states.value / 100 });
     } else if (digit === "C") {
       setOperand([]);
       setNumbers([]);
-      setValue({ ...value, value: 0, float: false });
+      setStates({ ...states, value: 0, float: false });
     } else if (
       digit === "-" ||
       digit === "+" ||
@@ -65,13 +56,13 @@ const Calculator = () => {
       digit === "/"
     ) {
       setOperand([...operand, digit]);
-      setValue({ ...value, newNumber: true });
+      setStates({ ...states, newNumber: true });
     } else if (digit === "=") {
-      arr = [...numbers, value.value];
-      calculateOperation();
+      arr = [...numbers, states.value];
+      let res = calculateOperation();
       setOperand([]);
       setNumbers([]);
-      setValue({ ...value, newNumber: false, float: false });
+      setStates({ value: res, newNumber: false, float: false });
     }
   };
 
@@ -101,15 +92,14 @@ const Calculator = () => {
         ret = ret / tempNum2;
       }
     }
-
-    setValue({ ...value, value: ret });
-    console.log("entrato", ret);
+    return ret;
+    /* setStates({ ...states, value: ret }); */
   };
 
   return (
     <div className="calculator">
       {/* <History ret={operationResult} /> */}
-      <Display value={value.value} />
+      <Display value={states.value} />
 
       <div className="keyboard">
         <div className="inputKeys">
