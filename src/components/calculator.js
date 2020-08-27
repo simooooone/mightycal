@@ -3,14 +3,14 @@ import ItemButton from "./button";
 import Display from "./display";
 
 const Calculator = () => {
-  useEffect(() => {}, [value]);
-
   const [value, setValue] = useState(0);
   const [operand, setOperand] = useState([]);
   const [numbers, setNumbers] = useState([]);
   const [float, setFloat] = useState(false);
   const [newNumber, setNewNumber] = useState(false);
   let num;
+  let arr = [];
+
   const onClick = (e) => {
     const regNum = /^\d+$/;
     const digit = e.target.innerText;
@@ -38,8 +38,6 @@ const Calculator = () => {
         setNewNumber(false);
       } else {
         setValue(num);
-        console.log(numbers[numbers.length - 1]);
-        setNumbers(() => (numbers[numbers.length - 1] = num));
       }
     } else if (digit === "•" && regNum.test(value)) {
       setValue(value + ".");
@@ -58,11 +56,10 @@ const Calculator = () => {
       digit === "/"
     ) {
       setOperand([...operand, digit]);
-      console.log(operand);
       setNewNumber(true);
     } else if (digit === "=") {
-      setNumbers([...numbers, value]);
-      calcOperation();
+      arr = [...numbers, value];
+      calculateOperation();
       setFloat(false);
       setOperand([]);
       setNumbers([]);
@@ -70,13 +67,13 @@ const Calculator = () => {
     }
   };
 
-  const calcOperation = () => {
+  const calculateOperation = () => {
     let ret = 0;
-    console.log("numbers", numbers);
 
-    for (let i = 0; i < numbers.length; i++) {
-      let tempNum = parseFloat(numbers[i]);
-      let tempNum2 = numbers[i + 1] ? parseFloat(numbers[i + 1]) : num;
+    for (let i = 0; i < arr.length - 1; i++) {
+      let tempNum = parseFloat(arr[i]);
+      let tempNum2 = parseFloat(arr[i + 1]);
+
       let op = operand[i];
       if (!ret) {
         ret = tempNum;
@@ -84,12 +81,16 @@ const Calculator = () => {
 
       if (op === "+") {
         ret = ret + tempNum2;
+        console.log("+", ret);
       } else if (op === "-") {
         ret = ret - tempNum2;
+        console.log("-", ret);
       } else if (op === "x") {
         ret = ret * tempNum2;
+        console.log("*", ret);
       } else if (op === "/") {
         ret = ret / tempNum2;
+        console.log("/", ret);
       }
     }
     setValue(ret);
