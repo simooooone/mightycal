@@ -1,26 +1,26 @@
 import React, { useEffect, useRef } from "react";
 
-const History = (params) => {
+const History = (props) => {
   let renderHistory = useRef(null);
   // Set the focus for the last element in history scrolling the div at bottom
   useEffect(() => {
     let historyInternal = document.querySelector(".history-internal");
     historyInternal.scrollTop = historyInternal.scrollHeight;
-  }, [params]);
+  }, [props]);
 
   useEffect(() => {
-    if (params.ret !== "") {
+    if (props.ret !== "") {
       renderHistory.current.style = "display: block";
     } else {
       renderHistory.current.style = "display: none";
     }
-  }, [params.ret]);
+  }, [props.ret]);
 
   return (
     <div className="history" ref={renderHistory}>
       <div
         className="history-internal"
-        dangerouslySetInnerHTML={{ __html: params.ret }}
+        dangerouslySetInnerHTML={{ __html: props.ret }}
       ></div>
     </div>
   );
