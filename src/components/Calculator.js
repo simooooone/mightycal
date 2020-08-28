@@ -52,8 +52,10 @@ const Calculator = () => {
       return;
     }
 
-    if (states.value.toString().length >= 8) {
-      return;
+    if (!states.newNumber) {
+      if (states.value.toString().length >= 8) {
+        return;
+      }
     }
 
     states.value === "0" ? (num = digit) : (num = states.value + digit);

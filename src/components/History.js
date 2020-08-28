@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 const History = (params) => {
-  // Set the focus for the last element in history scrolling the div
+  // Set the focus for the last element in history scrolling the div at bottom
   useEffect(() => {
     let historyInternal = document.querySelector(".history-internal");
     historyInternal.scrollTop = historyInternal.scrollHeight;
