@@ -3,7 +3,8 @@
 }
 
 body {
-  background-color: #20232a;
+  background-color: #9ac2c9;
+
   font-family: "Ubuntu", sans-serif;
   margin: 0;
   padding: 0;
@@ -20,7 +21,7 @@ html {
   justify-content: center;
 
   h1 {
-    color: #61dafb;
+    color: #4a5043;
   }
 
   .calculator {
@@ -32,12 +33,13 @@ html {
       margin: 5px auto;
       padding: 15px;
       border-radius: 25px;
-      background-color: #fff;
+      background-color: #b9d8c2;
       text-align: right;
 
       .history-internal {
         width: 100%;
-        background-color: #fff;
+        background-color: #b9d8c2;
+        color: #4a5043;
         height: 78px;
         overflow: hidden;
         overflow-y: scroll;
@@ -58,6 +60,8 @@ html {
         padding: 0;
         padding-right: 45px;
         text-align: right;
+        background-color: #b9d8c2;
+        color: #4a5043;
       }
     }
 
@@ -110,14 +114,18 @@ html {
     position: relative;
     -webkit-appearance: none;
 
+    background-color: #b9d8c2;
+    color: #4a5043;
+
     &.border-left {
       //border-left: 1px solid #aaa;
     }
 
     &:hover,
     &:focus {
-      color: #fff;
-      background-color: #20232a;
+      color: #4a5043;
+      background-color: #ffcb47;
+      outline: none;
     }
   }
 }

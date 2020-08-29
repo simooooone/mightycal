@@ -14,7 +14,7 @@ const Calculator = () => {
   const [numbers, setNumbers] = useState([]);
   let num;
   let arr = [];
-  let [history, setHistory] = useState("");
+  let [history, setHistory] = useState([]);
 
   const onClick = (e) => {
     const regNum = /^\d+$/;
@@ -43,7 +43,7 @@ const Calculator = () => {
   };
 
   const setHistoryProc = (digit, result) => {
-    setHistory((state) => state + digit + "=" + result + "<br />");
+    setHistory([...history, digit + "=" + result]);
   };
 
   const setDigits = (digit) => {
@@ -77,35 +77,42 @@ const Calculator = () => {
   const calculateOperation = () => {
     arr = [...numbers, states.value];
     let ret = 0;
+    let hist = "";
+    if (arr[1]) {
+      for (let i = 0; i < arr.length - 1; i++) {
+        let tempNum = parseFloat(arr[i]);
+        let tempNum2 = parseFloat(arr[i + 1]);
 
-    for (let i = 0; i < arr.length - 1; i++) {
-      let tempNum = parseFloat(arr[i]);
-      let tempNum2 = parseFloat(arr[i + 1]);
+        let op = operand[i];
 
-      let op = operand[i];
+        if (!ret) {
+          ret = tempNum;
+          hist = tempNum + op + tempNum2;
+        } else {
+          hist = hist + op + tempNum2;
+        }
 
-      if (!ret) {
-        ret = tempNum;
-        history = tempNum + op + tempNum2;
-      } else {
-        history = history + op + tempNum2;
+        if (op === "+") {
+          ret = ret + tempNum2;
+        } else if (op === "-") {
+          ret = ret - tempNum2;
+        } else if (op === "x") {
+          ret = ret * tempNum2;
+        } else if (op === "/") {
+          if (parseInt(tempNum2) === 0) {
+            // TODO manage the division by 0
+            ret = "Error, division by 0 press C to continue";
+          } else {
+            ret = ret / tempNum2;
+          }
+        }
       }
 
-      if (op === "+") {
-        ret = ret + tempNum2;
-      } else if (op === "-") {
-        ret = ret - tempNum2;
-      } else if (op === "x") {
-        ret = ret * tempNum2;
-      } else if (op === "/") {
-        ret = ret / tempNum2;
-      }
+      setHistoryProc(hist, ret);
+      setOperand([]);
+      setNumbers([]);
+      setStates({ value: ret, newNumber: false, float: false });
     }
-
-    setHistoryProc(history, ret);
-    setOperand([]);
-    setNumbers([]);
-    setStates({ value: ret, newNumber: false, float: false });
   };
 
   return (
