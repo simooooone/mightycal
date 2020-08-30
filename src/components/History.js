@@ -1,24 +1,23 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, memo } from "react";
 
 const History = (props) => {
+  const { histories } = props;
   let renderHistory = useRef(null);
   let historyInternal = useRef(null);
 
-  // Set the focus for the last element in history scrolling the div at bottom
   useEffect(() => {
+    // Set the focus for the last element in history scrolling the div at bottom
     historyInternal.current.scrollTop = historyInternal.current.scrollHeight;
-  }, [props]);
 
-  useEffect(() => {
-    props.ret.length !== 0
+    histories.length !== 0
       ? (renderHistory.current.style = "display: block")
       : (renderHistory.current.style = "display: none");
-  }, [props.ret]);
+  }, [histories]);
 
   return (
     <div className="history" ref={renderHistory}>
       <div className="history-internal" ref={historyInternal}>
-        {props.ret.map((prop, index) => {
+        {histories.map((prop, index) => {
           return (
             <div key={index}>
               <span>{prop}</span>
@@ -31,4 +30,4 @@ const History = (props) => {
   );
 };
 
-export default History;
+export default memo(History);

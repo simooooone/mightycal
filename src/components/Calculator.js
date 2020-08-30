@@ -3,18 +3,37 @@ import ItemButton from "./Button";
 import Display from "./Display";
 import History from "./History";
 
+/* function reducer(state, action) {
+  if (action.type === "+") {
+    return { ...state, value: state.value + 1 };
+  } else if (action.type === "-") {
+    return { ...state, value: state.value - 1 };
+  } else {
+    return state;
+  }
+} */
+
 const Calculator = () => {
+  /* const [reducerState, dispatch] = useReducer(reducer, {
+    value: 0,
+    float: false,
+    newNumber: false,
+    history: [],
+    operand: [],
+    numbers: [],
+  }); */
+
   const [states, setStates] = useState({
     value: 0,
     float: false,
     newNumber: false,
+    history: [],
+    operand: [],
+    numbers: [],
   });
 
-  const [operand, setOperand] = useState([]);
-  const [numbers, setNumbers] = useState([]);
   let num;
   let arr = [];
-  let [history, setHistory] = useState([]);
 
   const onClick = (e) => {
     const regNum = /^\d+$/;
@@ -22,28 +41,39 @@ const Calculator = () => {
     if (regNum.test(digit) || digit === "±") {
       setDigits(digit);
     } else if (digit === "•" && regNum.test(states.value)) {
-      setStates({ ...states, float: true, value: states.value + "." });
+      setStates({
+        ...states,
+        float: true,
+        value: states.value + ".",
+      });
     } else if (digit === "%") {
-      setStates({ ...states, value: states.value / 100 });
+      setStates({
+        ...states,
+        value: states.value / 100,
+      });
     } else if (digit === "C") {
-      setOperand([]);
-      setNumbers([]);
-      setStates({ ...states, value: 0, float: false });
+      setStates({
+        ...states,
+        value: 0,
+        float: false,
+        numbers: [],
+        operand: [],
+      });
     } else if (
       digit === "-" ||
       digit === "+" ||
       digit === "x" ||
       digit === "/"
     ) {
-      setOperand([...operand, digit]);
-      setStates({ ...states, newNumber: true });
+      setStates({
+        ...states,
+        newNumber: true,
+        operand: [...states.operand, digit],
+      });
+      console.log(digit);
     } else if (digit === "=") {
       calculateOperation();
     }
-  };
-
-  const setHistoryProc = (digit, result) => {
-    setHistory([...history, digit + "=" + result]);
   };
 
   const setDigits = (digit) => {
@@ -67,15 +97,19 @@ const Calculator = () => {
     }
 
     if (states.newNumber) {
-      setNumbers([...numbers, states.value]);
-      setStates((state) => ({ state, value: digit, newNumber: false }));
+      setStates({
+        ...states,
+        value: digit,
+        newNumber: false,
+        numbers: [...states.numbers, states.value],
+      });
     } else {
       setStates({ ...states, value: num });
     }
   };
 
   const calculateOperation = () => {
-    arr = [...numbers, states.value];
+    arr = [...states.numbers, states.value];
     let ret = 0;
     let hist = "";
     if (arr[1]) {
@@ -83,7 +117,7 @@ const Calculator = () => {
         let tempNum = parseFloat(arr[i]);
         let tempNum2 = parseFloat(arr[i + 1]);
 
-        let op = operand[i];
+        let op = states.operand[i];
 
         if (!ret) {
           ret = tempNum;
@@ -100,7 +134,6 @@ const Calculator = () => {
           ret = ret * tempNum2;
         } else if (op === "/") {
           if (parseInt(tempNum2) === 0) {
-            // TODO manage the division by 0
             ret = "Error, division by 0 press C to continue";
           } else {
             ret = ret / tempNum2;
@@ -108,16 +141,20 @@ const Calculator = () => {
         }
       }
 
-      setHistoryProc(hist, ret);
-      setOperand([]);
-      setNumbers([]);
-      setStates({ value: ret, newNumber: false, float: false });
+      setStates({
+        history: [...states.history, hist + " = " + ret],
+        value: ret,
+        newNumber: false,
+        float: false,
+        numbers: [],
+        operand: [],
+      });
     }
   };
 
   return (
     <div className="calculator">
-      <History ret={history} />
+      <History histories={states.history} />
       <Display value={states.value} />
 
       <div className="keyboard">
