@@ -33,7 +33,6 @@ const Calculator = () => {
   });
 
   let num;
-  let arr = [];
 
   const onClick = (e) => {
     const regNum = /^\d+$/;
@@ -70,7 +69,6 @@ const Calculator = () => {
         newNumber: true,
         operand: [...states.operand, digit],
       });
-      console.log(digit);
     } else if (digit === "=") {
       calculateOperation();
     }
@@ -109,6 +107,71 @@ const Calculator = () => {
   };
 
   const calculateOperation = () => {
+    let arr = [...states.numbers, states.value];
+    let op = states.operand;
+    let hist = "";
+
+    if (arr[1]) {
+      // Joining the history into a string
+      for (let i = 0; i < arr.length - 1; i++) {
+        let tempNum = parseFloat(arr[i]);
+        let tempNum2 = parseFloat(arr[i + 1]);
+
+        if (i === 0) {
+          hist = tempNum + op[i] + tempNum2;
+        } else {
+          hist = hist + op[i] + tempNum2;
+        }
+      }
+
+      // Calculating the result following operator precedence
+      while (arr.length > 1) {
+        let indexMultiply = op.indexOf("x");
+        let indexDivision = op.indexOf("/");
+        let indexPlus = op.indexOf("+");
+        let indexMinus = op.indexOf("-");
+
+        if (indexMultiply >= 0) {
+          arr[indexMultiply] =
+            parseFloat(arr[indexMultiply]) * parseFloat(arr[indexMultiply + 1]);
+          arr.splice(indexMultiply + 1, 1);
+          op.splice(indexMultiply, 1);
+        } else if (indexDivision >= 0) {
+          if (parseInt(arr[indexDivision + 1]) === 0) {
+            arr[0] = "Error, division by 0 press C to continue";
+            break;
+          } else {
+            arr[indexDivision] =
+              parseFloat(arr[indexDivision]) /
+              parseFloat(arr[indexDivision + 1]);
+            arr.splice(indexDivision + 1, 1);
+            op.splice(indexDivision, 1);
+          }
+        } else if (indexPlus >= 0) {
+          arr[indexPlus] =
+            parseFloat(arr[indexPlus]) + parseFloat(arr[indexPlus + 1]);
+          arr.splice(indexPlus + 1, 1);
+          op.splice(indexPlus, 1);
+        } else if (indexMinus >= 0) {
+          arr[indexMinus] =
+            parseFloat(arr[indexMinus]) - parseFloat(arr[indexMinus + 1]);
+          arr.splice(indexMinus + 1, 1);
+          op.splice(indexMinus, 1);
+        }
+      }
+
+      setStates({
+        history: [...states.history, hist + " = " + arr[0]],
+        value: arr[0],
+        newNumber: false,
+        float: false,
+        numbers: [],
+        operand: [],
+      });
+    }
+  };
+
+  /* const calculateOperation = () => {
     arr = [...states.numbers, states.value];
     let ret = 0;
     let hist = "";
@@ -150,7 +213,7 @@ const Calculator = () => {
         operand: [],
       });
     }
-  };
+  }; */
 
   return (
     <div className="calculator">
