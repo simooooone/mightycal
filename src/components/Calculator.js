@@ -137,8 +137,8 @@ const Calculator = () => {
           arr.splice(indexMultiply + 1, 1);
           op.splice(indexMultiply, 1);
         } else if (indexDivision >= 0) {
-          if (parseInt(arr[indexDivision + 1]) === 0) {
-            arr[0] = "Error, division by 0 press C to continue";
+          if (arr[indexDivision + 1] === 0) {
+            arr[0] = "Error: division by 0. Press C to continue";
             break;
           } else {
             arr[indexDivision] =
