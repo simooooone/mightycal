@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/mightycal/static/css/main.7554cdec.chunk.css",
+    "main.js": "/mightycal/static/js/main.0f4056b2.chunk.js",
+    "main.js.map": "/mightycal/static/js/main.0f4056b2.chunk.js.map",
+    "runtime-main.js": "/mightycal/static/js/runtime-main.1f03fa5d.js",
+    "runtime-main.js.map": "/mightycal/static/js/runtime-main.1f03fa5d.js.map",
+    "static/js/2.4ce65183.chunk.js": "/mightycal/static/js/2.4ce65183.chunk.js",
+    "static/js/2.4ce65183.chunk.js.map": "/mightycal/static/js/2.4ce65183.chunk.js.map",
+    "index.html": "/mightycal/index.html",
+    "precache-manifest.1c15a0cdc984bac3bef177b07de643c1.js": "/mightycal/precache-manifest.1c15a0cdc984bac3bef177b07de643c1.js",
+    "service-worker.js": "/mightycal/service-worker.js",
+    "static/css/main.7554cdec.chunk.css.map": "/mightycal/static/css/main.7554cdec.chunk.css.map",
+    "static/js/2.4ce65183.chunk.js.LICENSE.txt": "/mightycal/static/js/2.4ce65183.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1f03fa5d.js",
+    "static/js/2.4ce65183.chunk.js",
+    "static/css/main.7554cdec.chunk.css",
+    "static/js/main.0f4056b2.chunk.js"
+  ]
+}
