@@ -1,0 +1,149 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  background-color: #9ac2c9;
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  margin: 0;
+}
+
+.App {
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100vh;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.App h1 {
+  color: #4a5043;
+  font-family: "Abril Fatface", cursive;
+}
+
+.App .calculator {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.App .calculator .history {
+  width: calc(100% - 10px);
+  margin: 5px auto;
+  padding: 15px;
+  border-radius: 25px;
+  background-color: #b9d8c2;
+  text-align: right;
+}
+
+.App .calculator .history .history-internal {
+  width: 100%;
+  background-color: #b9d8c2;
+  color: #4a5043;
+  height: 78px;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-right: 10px;
+}
+
+.App .calculator .contDisplay {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.App .calculator .contDisplay .display {
+  max-width: 100%;
+  width: 100%;
+  border-radius: 25px;
+  margin: 3px;
+  border: 0 none;
+  height: 50px;
+  line-height: 50px;
+  padding: 0;
+  padding-right: 45px;
+  text-align: right;
+  background-color: #b9d8c2;
+  color: #4a5043;
+}
+
+.App .calculator .keyboard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 100%;
+  width: 100%;
+}
+
+.App .calculator .keyboard .inputKeys {
+  width: 75%;
+}
+
+.App .calculator .keyboard .inputKeys .functions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.App .calculator .keyboard .inputKeys .keys {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap-reverse;
+      flex-wrap: wrap-reverse;
+}
+
+.App .calculator .keyboard .inputKeys button {
+  width: calc(33.33333333333333% - 6px);
+}
+
+.App .calculator .keyboard .inputKeys .foot .key-0 {
+  width: calc(66.6666666666667% - 6px);
+  text-align: left;
+  padding-left: 45px;
+}
+
+.App .calculator .keyboard .operations {
+  width: 25%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.App button {
+  border: 0 none;
+  border-radius: 25px;
+  margin: 3px;
+  padding: 0;
+  height: 50px;
+  border: 0 none;
+  line-height: 50px;
+  position: relative;
+  -webkit-appearance: none;
+  background-color: #b9d8c2;
+  color: #4a5043;
+}
+
+.App button:hover, .App button:focus {
+  color: #4a5043;
+  background-color: #ffcb47;
+  outline: none;
+}
+/*# sourceMappingURL=style.css.map */
