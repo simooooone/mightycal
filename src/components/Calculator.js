@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ItemButton from "./Button";
 import Display from "./Display";
 import History from "./History";
-
+import Decimal from "decimal.js";
 /* function reducer(state, action) {
   if (action.type === "+") {
     return { ...state, value: state.value + 1 };
@@ -114,13 +114,13 @@ const Calculator = () => {
     if (arr[1]) {
       // Joining the history into a string
       for (let i = 0; i < arr.length - 1; i++) {
-        let tempNum = parseFloat(arr[i]);
-        let tempNum2 = parseFloat(arr[i + 1]);
+        let tempNum = new Decimal(arr[i]);
+        let tempNum2 = new Decimal(arr[i + 1]);
 
         if (i === 0) {
-          hist = tempNum + op[i] + tempNum2;
+          hist = tempNum.toFixed() + op[i] + tempNum2.toFixed();
         } else {
-          hist = hist + op[i] + tempNum2;
+          hist = hist + op[i] + tempNum2.toFixed();
         }
       }
 
@@ -133,32 +133,39 @@ const Calculator = () => {
 
         if (indexMultiply >= 0) {
           arr[indexMultiply] =
-            parseFloat(arr[indexMultiply]) * parseFloat(arr[indexMultiply + 1]);
+            //parseFloat(arr[indexMultiply]) * parseFloat(arr[indexMultiply + 1]);
+            Decimal.mul(arr[indexMultiply], arr[indexMultiply + 1]).toFixed();
           arr.splice(indexMultiply + 1, 1);
           op.splice(indexMultiply, 1);
         } else if (indexDivision >= 0) {
-          debugger;
+          let zero = new Decimal(arr[indexDivision + 1]);
           if (
-            parseInt(arr[indexDivision + 1]) === 0 ||
-            parseFloat(arr[indexDivision + 1]) === 0
+            /* parseInt(arr[indexDivision + 1]) === 0 ||
+            parseFloat(arr[indexDivision + 1]) === 0 */
+
+            zero.isZero() ||
+            (zero.isZero() && zero.isNeg())
           ) {
             arr[0] = "Error: division by 0. Press C to continue";
             break;
           } else {
             arr[indexDivision] =
-              parseFloat(arr[indexDivision]) /
-              parseFloat(arr[indexDivision + 1]);
+              /* parseFloat(arr[indexDivision]) /
+              parseFloat(arr[indexDivision + 1]); */
+              Decimal.div(arr[indexDivision], arr[indexDivision + 1]).toFixed();
             arr.splice(indexDivision + 1, 1);
             op.splice(indexDivision, 1);
           }
         } else if (indexPlus >= 0) {
           arr[indexPlus] =
-            parseFloat(arr[indexPlus]) + parseFloat(arr[indexPlus + 1]);
+            /* parseFloat(arr[indexPlus]) + parseFloat(arr[indexPlus + 1]); */
+            Decimal.add(arr[indexPlus], arr[indexPlus + 1]).toFixed();
           arr.splice(indexPlus + 1, 1);
           op.splice(indexPlus, 1);
         } else if (indexMinus >= 0) {
           arr[indexMinus] =
-            parseFloat(arr[indexMinus]) - parseFloat(arr[indexMinus + 1]);
+            /*  parseFloat(arr[indexMinus]) - parseFloat(arr[indexMinus + 1]); */
+            Decimal.minus(arr[indexMinus], arr[indexMinus + 1]).toFixed();
           arr.splice(indexMinus + 1, 1);
           op.splice(indexMinus, 1);
         }
