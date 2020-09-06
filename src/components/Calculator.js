@@ -139,33 +139,29 @@ const Calculator = () => {
           op.splice(indexMultiply, 1);
         } else if (indexDivision >= 0) {
           let zero = new Decimal(arr[indexDivision + 1]);
-          if (
-            /* parseInt(arr[indexDivision + 1]) === 0 ||
-            parseFloat(arr[indexDivision + 1]) === 0 */
-
-            zero.isZero() ||
-            (zero.isZero() && zero.isNeg())
-          ) {
+          if (zero.isZero() || (zero.isZero() && zero.isNeg())) {
             arr[0] = "Error: division by 0. Press C to continue";
             break;
           } else {
-            arr[indexDivision] =
-              /* parseFloat(arr[indexDivision]) /
-              parseFloat(arr[indexDivision + 1]); */
-              Decimal.div(arr[indexDivision], arr[indexDivision + 1]).toFixed();
+            arr[indexDivision] = Decimal.div(
+              arr[indexDivision],
+              arr[indexDivision + 1]
+            ).toFixed();
             arr.splice(indexDivision + 1, 1);
             op.splice(indexDivision, 1);
           }
         } else if (indexPlus >= 0) {
-          arr[indexPlus] =
-            /* parseFloat(arr[indexPlus]) + parseFloat(arr[indexPlus + 1]); */
-            Decimal.add(arr[indexPlus], arr[indexPlus + 1]).toFixed();
+          arr[indexPlus] = Decimal.add(
+            arr[indexPlus],
+            arr[indexPlus + 1]
+          ).toFixed();
           arr.splice(indexPlus + 1, 1);
           op.splice(indexPlus, 1);
         } else if (indexMinus >= 0) {
-          arr[indexMinus] =
-            /*  parseFloat(arr[indexMinus]) - parseFloat(arr[indexMinus + 1]); */
-            Decimal.minus(arr[indexMinus], arr[indexMinus + 1]).toFixed();
+          arr[indexMinus] = Decimal.minus(
+            arr[indexMinus],
+            arr[indexMinus + 1]
+          ).toFixed();
           arr.splice(indexMinus + 1, 1);
           op.splice(indexMinus, 1);
         }
