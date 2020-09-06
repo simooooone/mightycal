@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/mightycal/precache-manifest.1c15a0cdc984bac3bef177b07de643c1.js"
+  "/mightycal/precache-manifest.9a8cd2686ca2508d40c65b296c72c6bb.js"
 );
 
 self.addEventListener('message', (event) => {
