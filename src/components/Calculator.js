@@ -3,26 +3,8 @@ import ItemButton from "./Button";
 import Display from "./Display";
 import History from "./History";
 import Decimal from "decimal.js";
-/* function reducer(state, action) {
-  if (action.type === "+") {
-    return { ...state, value: state.value + 1 };
-  } else if (action.type === "-") {
-    return { ...state, value: state.value - 1 };
-  } else {
-    return state;
-  }
-} */
 
 const Calculator = () => {
-  /* const [reducerState, dispatch] = useReducer(reducer, {
-    value: 0,
-    float: false,
-    newNumber: false,
-    history: [],
-    operand: [],
-    numbers: [],
-  }); */
-
   const [states, setStates] = useState({
     value: 0,
     float: false,
