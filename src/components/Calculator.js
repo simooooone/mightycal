@@ -179,50 +179,6 @@ const Calculator = () => {
     }
   };
 
-  /* const calculateOperation = () => {
-    arr = [...states.numbers, states.value];
-    let ret = 0;
-    let hist = "";
-    if (arr[1]) {
-      for (let i = 0; i < arr.length - 1; i++) {
-        let tempNum = parseFloat(arr[i]);
-        let tempNum2 = parseFloat(arr[i + 1]);
-
-        let op = states.operand[i];
-
-        if (!ret) {
-          ret = tempNum;
-          hist = tempNum + op + tempNum2;
-        } else {
-          hist = hist + op + tempNum2;
-        }
-
-        if (op === "+") {
-          ret = ret + tempNum2;
-        } else if (op === "-") {
-          ret = ret - tempNum2;
-        } else if (op === "x") {
-          ret = ret * tempNum2;
-        } else if (op === "/") {
-          if (parseInt(tempNum2) === 0) {
-            ret = "Error, division by 0 press C to continue";
-          } else {
-            ret = ret / tempNum2;
-          }
-        }
-      }
-
-      setStates({
-        history: [...states.history, hist + " = " + ret],
-        value: ret,
-        newNumber: false,
-        float: false,
-        numbers: [],
-        operand: [],
-      });
-    }
-  }; */
-
   return (
     <div className="calculator">
       <History histories={states.history} />
