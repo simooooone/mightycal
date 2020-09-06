@@ -70,7 +70,11 @@ const Calculator = () => {
 
     states.value === "0" ? (num = digit) : (num = states.value + digit);
 
-    num = Decimal(num);
+    if (states.float) {
+      num = Decimal(num).toFixed(states.value.length - 1);
+    } else {
+      num = Decimal(num).toFixed();
+    }
 
     if (states.newNumber) {
       setStates({
