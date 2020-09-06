@@ -70,11 +70,7 @@ const Calculator = () => {
 
     states.value === "0" ? (num = digit) : (num = states.value + digit);
 
-    if (states.float) {
-      num = parseFloat(num).toFixed(states.value.length - 1);
-    } else {
-      num = parseInt(num, 10);
-    }
+    num = Decimal(num);
 
     if (states.newNumber) {
       setStates({
