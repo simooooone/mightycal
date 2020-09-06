@@ -132,9 +132,10 @@ const Calculator = () => {
         let indexMinus = op.indexOf("-");
 
         if (indexMultiply >= 0) {
-          arr[indexMultiply] =
-            //parseFloat(arr[indexMultiply]) * parseFloat(arr[indexMultiply + 1]);
-            Decimal.mul(arr[indexMultiply], arr[indexMultiply + 1]).toFixed();
+          arr[indexMultiply] = Decimal.mul(
+            arr[indexMultiply],
+            arr[indexMultiply + 1]
+          ).toFixed();
           arr.splice(indexMultiply + 1, 1);
           op.splice(indexMultiply, 1);
         } else if (indexDivision >= 0) {
