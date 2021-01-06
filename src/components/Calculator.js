@@ -33,12 +33,34 @@ const Calculator = () => {
         value: states.value / 100,
       });
     } else if (digit === "C") {
+      let operands = [];
+      /* let numbersArr = []; */
+
+      if (typeof states.operand !== "undefined" && states.operand.length > 0) {
+        operands = states.operand.slice(0, -1);
+      }
+
+      /* if (typeof states.operand !== "undefined" && states.operand.length > 0) {
+        numbersArr = states.numbers.slice(0, -1);
+      } */
+
+      debugger;
+      console.log(operands);
+      console.log(states.numbers);
+      setStates({
+        ...states,
+        /* value: states.numbers[states.numbers.length - 1], */
+        float: false,
+        operand: operands,
+      });
+    } else if (digit === "AC") {
       setStates({
         ...states,
         value: 0,
         float: false,
-        numbers: [],
+        newNumber: false,
         operand: [],
+        numbers: [],
       });
     } else if (
       digit === "-" ||
@@ -92,7 +114,8 @@ const Calculator = () => {
     let arr = [...states.numbers, states.value];
     let op = states.operand;
     let hist = "";
-
+    console.log("arr", arr);
+    console.log("op", op);
     if (arr[1]) {
       // Joining the history into a string
       for (let i = 0; i < arr.length - 1; i++) {
@@ -141,10 +164,11 @@ const Calculator = () => {
           arr.splice(indexPlus + 1, 1);
           op.splice(indexPlus, 1);
         } else if (indexMinus >= 0) {
-          arr[indexMinus] = Decimal.minus(
+          arr[indexMinus] = Decimal.sub(
             arr[indexMinus],
             arr[indexMinus + 1]
           ).toFixed();
+
           arr.splice(indexMinus + 1, 1);
           op.splice(indexMinus, 1);
         }
@@ -174,7 +198,7 @@ const Calculator = () => {
               onClick={onClick}
               itemText="C"
             />
-            <ItemButton buttonClass="key-sign" onClick={onClick} itemText="±" />
+            <ItemButton buttonClass="key-ac" onClick={onClick} itemText="AC" />
             <ItemButton
               buttonClass="key-percent"
               onClick={onClick}
@@ -206,10 +230,11 @@ const Calculator = () => {
           </div>
           <div className="foot">
             <ItemButton
-              buttonClass="key-0 border-left"
+              buttonClass="key-sign border-left"
               onClick={onClick}
-              itemText="0"
+              itemText="±"
             />
+            <ItemButton buttonClass="key-0" onClick={onClick} itemText="0" />
             <ItemButton buttonClass="key-dot" onClick={onClick} itemText="•" />
           </div>
         </div>
